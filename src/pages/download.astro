@@ -1,0 +1,148 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+
+const metadata = {
+  title: '下载 Evo Chat',
+};
+---
+
+<Layout metadata={metadata}>
+  <Features3
+    title="桌面端"
+    subtitle="支持 Windows、macOS 和 Linux 系统"
+    columns={3}
+    items={[
+      {
+        title: 'Windows',
+        description: '支持 Windows 10 及以上版本',
+        icon: 'tabler:brand-windows',
+        callToAction: [
+          {
+            target: '_blank',
+            text: '下载 Windows 版本',
+            href: '#',
+            variant: 'primary',
+            class: 'px-3 py-1.5 text-sm',
+          },
+        ],
+      },
+      {
+        title: 'macOS',
+        description: '支持 macOS 10.15 及以上版本',
+        icon: 'tabler:brand-apple',
+        callToAction: [
+          {
+            target: '_blank',
+            text: '下载 Apple Silicon 版本',
+            href: '#',
+            variant: 'primary',
+
+            class: 'px-3 py-1.5 text-sm',
+          },
+          {
+            target: '_blank',
+            text: '下载 Intel 版本',
+            href: '#',
+            variant: 'secondary',
+            class: 'px-3 py-1.5 text-sm',
+          },
+        ],
+      },
+      // Linux 部分
+      {
+        title: 'Linux',
+        description: '支持主流 Linux 发行版',
+        icon: 'tabler:brand-ubuntu',
+        callToAction: [
+          {
+            target: '_blank',
+            text: '下载 AMD64 版本',
+            href: '#',
+            variant: 'primary',
+            class: 'px-3 py-1.5 text-sm',
+          },
+          {
+            target: '_blank',
+            text: '下载 ARM64 版本',
+            href: '#',
+            variant: 'secondary',
+            class: 'px-3 py-1.5 text-sm',
+          },
+        ],
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features3>
+
+  <Features3
+    title="移动端"
+    subtitle="支持 iOS、Android 和 HarmonyOS 系统"
+    columns={3}
+    items={[
+      {
+        title: 'iOS',
+        description: '支持 iOS 13.0 及以上版本',
+        icon: 'tabler:brand-apple',
+        callToAction: {
+          target: '_blank',
+          text: '正在开发中...',
+          href: '#',
+          variant: 'secondary',
+          class: 'px-3 py-1.5 text-sm',
+        },
+      },
+      {
+        title: 'Android',
+        description: '支持 Android 8.0 及以上版本',
+        icon: 'tabler:brand-android',
+        callToAction: {
+          target: '_blank',
+          text: '正在开发中...',
+          href: '#',
+          variant: 'secondary',
+          class: 'px-3 py-1.5 text-sm',
+        },
+      },
+      {
+        title: 'HarmonyOS',
+        description: '支持 HarmonyOS 2.0 及以上版本',
+        icon: 'tabler:brand-open-source',
+        callToAction: {
+          target: '_blank',
+          text: '正在开发中...',
+          href: 'javascript:void(0)',
+          variant: 'secondary',
+          class: 'px-3 py-1.5 text-sm cursor-not-allowed opacity-60 pointer-events-none',
+        },
+      },
+    ]}
+  />
+
+  <Features3
+    title="Web 版本"
+    subtitle="无需下载安装，随时随地使用"
+    columns={1}
+    items={[
+      {
+        title: '立即使用',
+        description: '打开浏览器即可使用，支持所有主流浏览器',
+        icon: 'tabler:browser',
+        callToAction: {
+          target: '_blank',
+          text: '启动 Web 版本',
+          href: 'https://chat.evolutionx.ai',
+          variant: 'primary',
+          class: 'px-3 py-1.5 text-sm',
+        },
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features3>
+</Layout>; ---

@@ -1,0 +1,290 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+
+import Features from '~/components/widgets/Features.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import Brands from '~/components/widgets/Brands.astro';
+import Testimonials from '../components/widgets/Testimonials.astro';
+
+const metadata = {
+  title: 'evo chat ai',
+};
+// 在文件顶部的 imports 后添加
+// 添加环境变量支持
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
+
+const getGithubStats = async () => {
+  try {
+    const headers = {
+      'User-Agent': 'evo-website',
+      ...(GITHUB_TOKEN && { Authorization: `token ${GITHUB_TOKEN}` }),
+    };
+
+    const [repoData, contributorsData] = await Promise.all([
+      fetch('https://api.github.com/repos/evolutionx-project/evo-chat', { headers }),
+      fetch('https://api.github.com/repos/evolutionx-project/evo-chat/contributors?per_page=1', { headers }),
+    ]);
+
+    const repo = await repoData.json();
+    const contributors = await contributorsData.json();
+
+    return {
+      stars: repo.stargazers_count || 0,
+      forks: repo.forks_count || 0,
+      contributors: Array.isArray(contributors) ? contributors.length : 0,
+      issues: repo.open_issues_count || 0,
+    };
+  } catch (error) {
+    console.error('Failed to fetch GitHub stats:', error);
+    return {
+      stars: '--',
+      forks: '--',
+      contributors: '--',
+      issues: '--',
+    };
+  }
+};
+
+const githubStats = await getGithubStats();
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+  <Hero
+    tagline=""
+    actions={[
+      {
+        variant: 'primary',
+        target: '_blank',
+        text: '开始使用',
+        href: 'https://chat.hevoai.com',
+      },
+      {
+        text: '下载',
+        href: '/download',
+        icon: 'tabler:download',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Evo Chat <span class="hidden sm:inline">打造你的 AI 交互中心</span><br />
+      <!-- your <span class="text-accent dark:text-white highlight">Startup</span> -->
+      <span>探索 AI 驱动未来</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      通过灵活的大模型接入能力，定制个性化的智能助手，提升工作效率，探索 AI
+      驱动的未来。支持主流大语言模型服务商，并通过知识库增强、多模态处理、MCP 协议等持续进化，让 AI
+      能力触手可及。全平台部署（Web、App、Windows、Mac、Linux），随时随地与你的 AI 团队协作。
+    </Fragment>
+
+    <Fragment slot="image">
+      <style is:inline>
+        lite-youtube {
+          margin: 0 auto;
+          max-width: 100%;
+        }
+      </style>
+    </Fragment>
+  </Hero>
+
+  <!-- Features2 Widget ************** -->
+
+  <Features
+    id="features"
+    title="核心特性"
+    subtitle="为用户提供全方位的 AI 智能助手解决方案"
+    columns={3}
+    items={[
+      {
+        title: '智能对话',
+        description: '支持多模型接入与灵活对话，集成上下文对话能力，结合知识库实现精准问答',
+        icon: 'tabler:message-circle',
+      },
+      {
+        title: '知识库管理',
+        description: '便捷的知识库管理系统，支持文档向量化和高效向量搜索，让知识检索更快捷',
+        icon: 'tabler:database',
+      },
+      {
+        title: '文件管理',
+        description: '完整的文件管理功能，支持上传、预览、分类管理，批量操作提升效率',
+        icon: 'tabler:files',
+      },
+      {
+        title: '全平台支持',
+        description: '支持 Web、桌面端（Windows、Mac、Linux）和移动端 App，随时随地便捷使用',
+        icon: 'tabler:devices',
+      },
+      {
+        title: '智能助手',
+        description: '支持预设和自定义多个专业领域助手，独立知识库管理，快速切换不同场景',
+        icon: 'tabler:robot',
+      },
+      {
+        title: '持续进化',
+        description: '定期更新优化，不断集成新的模型能力，持续提升用户体验',
+        icon: 'tabler:refresh',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features>
+
+  <Stats
+    title="开源社区"
+    subtitle="社区支持与贡献"
+    stats={[
+      { title: 'Stars', amount: githubStats.stars?.toString() },
+      { title: 'Forks', amount: githubStats.forks?.toString() },
+      { title: 'Contributors', amount: githubStats.contributors?.toString() },
+      { title: 'Active Issues', amount: githubStats.issues?.toString() },
+    ]}
+  />
+
+  <!-- Brands Widget ****************** -->
+
+  <Brands
+    title="内置服务商"
+    subtitle="支持主流大语言模型服务商接入，覆盖国内外领先的 AI 能力，为用户提供全方位的智能对话体验"
+    icons={[]}
+    images={[
+      {
+        src: 'https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_1280.png',
+        alt: 'Paypal',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2021/12/06/13/48/visa-6850402_1280.png',
+        alt: 'Visa',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2013/10/01/10/29/ebay-189064_1280.png',
+        alt: 'Ebay',
+      },
+
+      {
+        src: 'https://cdn.pixabay.com/photo/2015/04/13/17/45/icon-720944_1280.png',
+        alt: 'Youtube',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2013/02/12/09/07/microsoft-80658_1280.png',
+        alt: 'Microsoft',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2015/04/23/17/41/node-js-736399_1280.png',
+        alt: 'Node JS',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2015/10/31/12/54/google-1015751_1280.png',
+        alt: 'Google',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2021/12/06/13/45/meta-6850393_1280.png',
+        alt: 'Meta',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2013/01/29/22/53/yahoo-76684_1280.png',
+        alt: 'Yahoo',
+      },
+    ]}
+  />
+
+  <Testimonials
+    title="用户评价"
+    testimonials={[
+      {
+        testimonial:
+          '作为一名技术团队负责人，Evo Chat 帮助我们团队显著提升了开发效率。AI 助手不仅能快速解答技术问题，还能协助代码审查，让团队协作更加顺畅。',
+        name: '张明',
+        job: '技术总监',
+        image: {
+          src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          alt: '张明照片',
+        },
+      },
+      {
+        testimonial:
+          'Evo Chat 的多模态能力给我的创作带来了新的可能。无论是文案创作还是图片生成，都能得到准确的建议和帮助，大大提升了工作效率。',
+        name: '李婷',
+        job: '内容创作者',
+        image: {
+          src: 'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          alt: '李婷照片',
+        },
+      },
+      {
+        testimonial:
+          '在教育咨询工作中，Evo Chat 成为了我的得力助手。知识库功能让我能快速检索专业资料，AI 助手的回答既专业又易懂，极大地提升了咨询效率。',
+        name: '王浩',
+        job: '教育顾问',
+        image: {
+          src: 'https://images.unsplash.com/photo-1512361436605-a484bdb34b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          alt: '王浩照片',
+        },
+      },
+    ]}
+    callToAction={{
+      target: '_blank',
+      text: '查看更多评价',
+      href: 'https://github.com/evolutionx-project/evo-chat',
+      icon: 'tabler:chevron-right',
+    }}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Testimonials>
+
+  <Features3
+    title="联系我们"
+    subtitle="如果您有任何问题或建议，欢迎随时与我们联系"
+    columns={4}
+    items={[
+      {
+        title: '邮件咨询',
+        icon: 'tabler:mail',
+        callToAction: {
+          target: '_blank',
+          text: '发送邮件',
+          href: 'mailto:support@evolutionx.ai',
+          variant: 'link',
+        },
+      },
+      {
+        title: '微信咨询',
+        icon: 'tabler:brand-wechat',
+        callToAction: {
+          target: '_blank',
+          text: '添加微信',
+          href: '/',
+          variant: 'link',
+        },
+      },
+      {
+        title: '知识星球',
+        icon: 'tabler:users-group',
+        callToAction: {
+          target: '_blank',
+          text: '加入社区',
+          href: '/',
+          variant: 'link',
+        },
+      },
+      {
+        title: 'GitHub',
+        icon: 'tabler:brand-github',
+        callToAction: {
+          target: '_blank',
+          text: '访问仓库',
+          href: 'https://github.com/evolutionx-project/evo-chat',
+          variant: 'link',
+        },
+      },
+    ]}
+  />
+</Layout>
