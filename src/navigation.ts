@@ -52,7 +52,7 @@ export const footerData = {
     {
       title: '关于',
       links: [
-        { text: '开源协议', href: '#' },
+        { text: '开源协议', href: 'https://github.com/evo-family/evo-chat/blob/main/LICENSE' },
         { text: '联系我们', href: '#' },
       ],
     },
@@ -65,7 +65,7 @@ export const footerData = {
     { ariaLabel: '头条', icon: 'tabler:brand-tiktok', href: '#' },
     { ariaLabel: '小红书', icon: 'tabler:notebook', href: '#' },
     { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/evolutionx-project/evo-chat' },
+    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/evo-family/evo-chat' },
     { ariaLabel: 'Bilibili', icon: 'tabler:brand-bilibili', href: '#' },
   ],
   // footNote: `

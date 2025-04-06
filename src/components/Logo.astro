@@ -1,9 +1,8 @@
 ---
 import { SITE } from 'astrowind:config';
+import logoLight from '~/assets/images/logo_t.svg?url';
+import logoDark from '~/assets/images/logo_t_white.svg?url';
 ---
 
-<span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
->
-  {SITE?.name}
-</span>
+<img src={logoLight} alt={SITE?.name} class="h-8 w-auto dark:hidden" />
+<img src={logoDark} alt={SITE?.name} class="h-8 w-auto hidden dark:block" />
