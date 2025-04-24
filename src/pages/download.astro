@@ -9,7 +9,7 @@ const metadata = {
 // 获取发布信息
 let downloads = {
   windows: '#',
-  windowsArm: '#',  // 新增 Windows ARM 版本
+  windowsArm: '#', // 新增 Windows ARM 版本
   macArm64: '#',
   macIntel: '#',
   linuxAmd64: '#',
@@ -33,7 +33,7 @@ try {
   // 获取各个版本的下载链接
   downloads = {
     windows: getDownloadUrl('setup.exe'),
-    windowsArm: getDownloadUrl('arm64-setup.exe'),  // 新增 Windows ARM 版本
+    windowsArm: getDownloadUrl('arm64-setup.exe'), // 新增 Windows ARM 版本
     macArm64: getDownloadUrl('arm64.dmg'),
     macIntel: getDownloadUrl('x64.dmg'),
     linuxAmd64: getDownloadUrl('x86_64.AppImage'),
@@ -189,4 +189,4 @@ try {
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Features3>
-</Layout>; ---
+</Layout>
