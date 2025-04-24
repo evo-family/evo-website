@@ -253,3 +253,34 @@ import { UI } from 'astrowind:config';
     Observer.start();
   });
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const response = await fetch('https://api.github.com/repos/evo-family/evo-chat');
+      const data = await response.json();
+      const starCount = data.stargazers_count;
+
+      const githubButton = document.querySelector('[data-github-stars]');
+      if (githubButton) {
+        // 找到 SVG 元素后面的位置
+        const svg = githubButton.querySelector('svg');
+        if (svg) {
+          // 创建新的文本节点
+          const textNode = document.createTextNode(` ⭐ ${starCount}`);
+          // 将文本节点插入到 SVG 之后
+          svg.after(textNode);
+        }
+      }
+    } catch (error) {
+      console.error('获取 GitHub stars 失败:', error);
+      const githubButton = document.querySelector('[data-github-stars]');
+      if (githubButton) {
+        const svg = githubButton.querySelector('svg');
+        if (svg) {
+          svg.after('GitHub');
+        }
+      }
+    }
+  });
+</script>
