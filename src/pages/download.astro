@@ -6,43 +6,58 @@ const metadata = {
   title: '下载 Evo Chat',
 };
 
-// 获取发布信息
+// 初始化下载链接
 let downloads = {
   windows: '#',
-  windowsArm: '#', // 新增 Windows ARM 版本
+  windowsArm: '#',
   macArm64: '#',
   macIntel: '#',
   linuxAmd64: '#',
   linuxArm64: '#',
 };
+---
 
-try {
-  const response = await fetch('https://release.hevoai.com');
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+<script>
+  // 客户端获取发布信息
+  async function fetchReleaseInfo() {
+    try {
+      const response = await fetch('https://release.hevoai.com');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const releaseInfo = await response.json();
+
+      // 解析下载链接
+      const getDownloadUrl = (pattern) => {
+        const asset = releaseInfo.assets?.find((asset) => asset.name.includes(pattern));
+        return asset ? asset.browser_download_url : '#';
+      };
+
+      // 更新下载链接
+      const downloads = {
+        windows: getDownloadUrl('x64-setup.exe'),
+        windowsArm: getDownloadUrl('arm64-setup.exe'), // Windows ARM 版本
+        macArm64: getDownloadUrl('arm64.dmg'),
+        macIntel: getDownloadUrl('x64.dmg'),
+        linuxAmd64: getDownloadUrl('x86_64.AppImage'),
+        linuxArm64: getDownloadUrl('arm64.AppImage'),
+      };
+
+      // 更新页面上的下载链接
+      Object.entries(downloads).forEach(([key, url]) => {
+        document.querySelectorAll(`[data-download="${key}"]`).forEach((link) => {
+          (link as HTMLLinkElement).href = url;
+        });
+      });
+    } catch (error) {
+      console.error('获取发布信息失败:', error);
+    }
   }
 
-  const releaseInfo = await response.json();
-
-  // 解析下载链接
-  const getDownloadUrl = (pattern) => {
-    const asset = releaseInfo.assets?.find((asset) => asset.name.includes(pattern));
-    return asset ? asset.browser_download_url : '#';
-  };
-
-  // 获取各个版本的下载链接
-  downloads = {
-    windows: getDownloadUrl('setup.exe'),
-    windowsArm: getDownloadUrl('arm64-setup.exe'), // 新增 Windows ARM 版本
-    macArm64: getDownloadUrl('arm64.dmg'),
-    macIntel: getDownloadUrl('x64.dmg'),
-    linuxAmd64: getDownloadUrl('x86_64.AppImage'),
-    linuxArm64: getDownloadUrl('arm64.AppImage'),
-  };
-} catch (error) {
-  console.error('获取发布信息失败:', error);
-}
----
+  // 页面加载完成后执行
+  document.addEventListener('DOMContentLoaded', fetchReleaseInfo);
+</script>
 
 <Layout metadata={metadata}>
   <Features3
@@ -61,6 +76,7 @@ try {
             href: downloads.windows,
             variant: 'primary',
             class: 'px-3 py-1.5 text-sm',
+            'data-download': 'windows',
             title: '适用于 Intel/AMD 处理器的 Windows 系统',
           },
           {
@@ -69,6 +85,7 @@ try {
             href: downloads.windowsArm,
             variant: 'secondary',
             class: 'px-3 py-1.5 text-sm',
+            'data-download': 'windowsArm',
             title: '适用于 ARM 处理器的 Windows 系统',
           },
         ],
@@ -84,6 +101,7 @@ try {
             href: downloads.macArm64,
             variant: 'primary',
             class: 'px-3 py-1.5 text-sm',
+            'data-download': 'macArm64',
           },
           {
             target: '_self',
@@ -91,6 +109,7 @@ try {
             href: downloads.macIntel,
             variant: 'secondary',
             class: 'px-3 py-1.5 text-sm',
+            'data-download': 'macIntel',
           },
         ],
       },
@@ -105,6 +124,7 @@ try {
             href: downloads.linuxAmd64,
             variant: 'primary',
             class: 'px-3 py-1.5 text-sm',
+            'data-download': 'linuxAmd64',
           },
           {
             target: '_self',
@@ -112,6 +132,7 @@ try {
             href: downloads.linuxArm64,
             variant: 'secondary',
             class: 'px-3 py-1.5 text-sm',
+            'data-download': 'linuxArm64',
           },
         ],
       },
