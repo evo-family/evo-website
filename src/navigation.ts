@@ -20,7 +20,19 @@ export const headerData = {
       href: getPermalink('/download'),
     },
   ],
-  actions: [{ text: '开始使用', variant: 'primary', href: 'https://chat.hevoai.com', target: '_blank' }],
+  actions: [
+    { 
+      text: '', 
+      variant: 'secondary', 
+      href: 'https://github.com/evo-family/evo-chat', 
+      target: '_blank',
+      class: 'flex items-center gap-1',
+      'data-github-stars': true,
+      icon: 'tabler:brand-github',
+      iconPosition: 'left'  // 添加这个属性来指定图标位置
+    },
+    { text: '开始使用', variant: 'primary', href: 'https://chat.hevoai.com', target: '_blank' }
+  ],
 };
 
 export const footerData = {
