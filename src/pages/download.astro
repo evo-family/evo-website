@@ -56,9 +56,28 @@ let downloads = {
     }
   }
 
-  // 页面加载和视图切换时都执行更新
-  document.addEventListener('DOMContentLoaded', fetchReleaseInfo);
-  document.addEventListener('astro:after-swap', fetchReleaseInfo);
+  // 检查是否需要更新下载链接
+  function shouldFetchReleaseInfo() {
+    // 检查是否在下载页面
+    const isDownloadPage = window.location.pathname.includes('download');
+    if (!isDownloadPage) return false;
+
+    // 检查是否已经有有效的下载链接
+    const hasValidLinks = document.querySelector('[data-download="windows"]')?.getAttribute('href') !== '#';
+    return !hasValidLinks;
+  }
+
+  // 只在需要时执行更新
+  if (shouldFetchReleaseInfo()) {
+    fetchReleaseInfo();
+  }
+
+  // 视图切换时检查是否需要更新
+  document.addEventListener('astro:after-swap', () => {
+    if (shouldFetchReleaseInfo()) {
+      fetchReleaseInfo();
+    }
+  });
 </script>
 
 <Layout metadata={metadata}>
